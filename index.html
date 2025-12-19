@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <!-- PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#ffffff">
+    <title>生活大師</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script crossorigin src="https://unpkg.com/react@18.2.0/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/lucide@0.263.1"></script>
+    <style>
+        @keyframes slide-up { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-slide-up { animation: slide-up 0.4s ease-out forwards; }
+        body { background-color: #f8fafc; color: #0f172a; overscroll-behavior-y: none; }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        const { useState, useEffect, useMemo, useRef } = React;
+        
+            const createIcon = (name) => ({size=24, className, ...p}) => {
+                const r = React.useRef(null);
+                React.useEffect(()=>{
+                    if(window.lucide && window.lucide.icons[name] && r.current){
+                        const s = window.lucide.createElement(window.lucide.icons[name]);
+                        s.setAttribute("width", size); s.setAttribute("height", size);
+                        if(className) s.setAttribute("class", className);
+                        r.current.innerHTML=""; r.current.appendChild(s);
+                    }
+                },[name,size,className]);
+                return React.createElement('span', {ref:r, style:{display:"inline-flex", verticalAlign:"middle"}, ...p});
+            };
+            const Icons = new Proxy({}, { get: (t, n) => createIcon(n) });
+            
+        
+        // --- User Code Injection ---
+        import React, { useState, useEffect, useRef } from 'react';
+import { 
+  User, 
+  BookOpen, 
+  ChevronUp, 
+  ChevronDown, 
+  Droplets, 
+  Timer, 
+  X, 
+  Cat, 
+  Wallet, 
+  Plus, 
+  ListTodo, 
+  Cpu, 
+  History, 
+  Trash2, 
+  Coffee, 
+  Flower2, 
+  CloudRain, 
+  Sun, 
+  Lock, 
+  Beef, 
+  CreditCard,
+  Upload
+} from 'lucide-react';
+
+// UI 框架組件
+const UIFrameSVG = ({ type, color }) => {
+  if (!type) return null;
+  const stroke = color || "#fbbf24";
+  const renderPath = () => {
+    switch (type) {
+      case 'ui_scanner': return <g><rect x="2" y="2" width="96" height="96" fill="none" stroke={stroke} strokeWidth="1" strokeDasharray="4 2"/><path d="M10 2 L2 2 L2 10 M90 2 L98 2 L98 10 M98 90 L98 98 L90 98 M10 98 L2 98 L2 90" stroke={stroke} strokeWidth="6"/></g>;
+      case 'ui_circuit': return <g><circle cx="50" cy="50" r="48" fill="none" stroke={stroke} strokeWidth="2"/><circle cx="50" cy="5" r="3" fill={stroke}/><circle cx="95" cy="50" r="3" fill={stroke}/><circle cx="50" cy="95" r="3" fill={stroke}/><circle cx="5" cy="50" r="3" fill={stroke}/></g>;
+      case 'ui_armor': return <path d="M20 2 H80 L98 20 V80 L80 98 H20 L2 80 V20 Z" fill="none" stroke={stroke} strokeWidth="4"/>;
+      case 'ui_data': return <g><rect x="5" y="5" width="90" height="90" fill="none" stroke={stroke} strokeWidth="2"/><path d="M5 20 H15 M5 40 H15 M5 60 H15 M5 80 H15 M85 20 H95 M85 40 H95 M85 60 H95 M85 80 H95" stroke={stroke} strokeWidth="3"/></g>;
+      case 'ui_target': return <g><circle cx="50" cy="50" r="40" fill="none" stroke={stroke} strokeWidth="1"/><path d="M50 5 V20 M50 80 V95 M5 50 H20 M80 50 H95" stroke={stroke} strokeWidth="4"/></g>;
+      case 'ui_tech_h': return <g><path d="M5 30 V10 H30 M70 10 H95 V30 M5 70 V90 H30 M70 90 H95 V70" stroke={stroke} strokeWidth="4"/><rect x="40" y="5" width="20" height="3" fill={stroke}/><rect x="40" y="92" width="20" height="3" fill={stroke}/></g>;
+      case 'ui_sub': return <g><circle cx="50" cy="50" r="46" fill="none" stroke={stroke} strokeWidth="4" strokeDasharray="1 4"/><circle cx="50" cy="50" r="40" fill="none" stroke={stroke} strokeWidth="1"/></g>;
+      case 'ui_hexagon': return <path d="M50 5 L93 27.5 V72.5 L50 95 L7 72.5 V27.5 Z" fill="none" stroke={stroke} strokeWidth="3"/>;
+      case 'ui_bracket': return <g><path d="M30 5 H5 V95 H30 M70 5 H95 V95 H70" fill="none" stroke={stroke} strokeWidth="4"/><rect x="48" y="5" width="4" height="10" fill={stroke}/><rect x="48" y="85" width="4" height="10" fill={stroke}/></g>;
+      default: return null;
+    }
+  };
+  return <svg className="absolute inset-0 w-full h-full z-20 pointer-events-none" viewBox="0 0 100 100">{renderPath()}</svg>;
+};
+
+export default function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userName, setUserName] = useState("");
+  const [userSerial, setUserSerial] = useState("");
+  const [userImg, setUserImg] = useState(null);
+  const [activeTab, setActiveTab] = useState('dashboard');
+  const [isGuideOpen, setIsGuideOpen] = useState(true);
+
+  // --- 所有任務數字與資源歸零 ---
+  const [wealth, setWealth] = useState(0); 
+  const [cat, setCat] = useState({ level: 0, exp: 0, maxExp: 100, hunger: 0, hydration: 0 });
+  const [todos, setTodos] = useState([]);
+  const [todoInput, setTodoInput] = useState("");
+  const [isMeditating, setIsMeditating] = useState(false);
+  const [meditationTime, setMeditationTime] = useState(300);
+  const [activeTrackId, setActiveTrackId] = useState(null);
+  const [equippedFrame, setEquippedFrame] = useState({ type: null, color: null });
+  const [petName, setPetName] = useState("廢料回收者");
+  const [petImg, setPetImg] = useState(null);
+  const [diaries, setDiaries] = useState([]);
+  const [input, setInput] = useState("");
+  
+  const [ledger, setLedger] = useState([]);
+  const [ledgerTitle, setLedgerTitle] = useState("");
+  const [ledgerAmount, setLedgerAmount] = useState("");
+  const [ledgerType, setLedgerType] = useState("expense");
+
+  const [nonEssentialTasks, setNonEssentialTasks] = useState([]);
+  const [nonEssentialInput, setNonEssentialInput] = useState("");
+
+  const petInputRef = useRef(null);
+  const audioCtxRef = useRef(null);
+  const activeNodesRef = useRef([]);
+  const masterGainRef = useRef(null);
+
+  const musicTracks = [
+    { id: 'track_cafe', name: '廢土角落咖啡廳', type: 'cafe', icon: Coffee, subtitle: '溫和爵士與背景環境音' },
+    { id: 'track_spa', name: '按摩靜心 SPA', type: 'spa', icon: Flower2, subtitle: '舒緩的深層共鳴頻率' },
+    { id: 'track_rain', name: '鏽蝕鐵皮雨聲', type: 'rain', icon: CloudRain, subtitle: '白噪音掩蓋環境雜訊' },
+    { id: 'track_zen', name: '數位禪宗空間', type: 'zen', icon: Sun, subtitle: '432Hz 能量頻率引導' }
+  ];
+
+  const supplyList = [
+    { id: 'pet_can', name: '寵物罐頭', cost: 150, hunger: 30, exp: 20, desc: '特級合成肉，大幅補充能量。' },
+    { id: 'pet_snack', name: '寵物零食', cost: 50, hunger: 10, exp: 5, desc: '脫水昆蟲乾，小幅提升經驗。' }
+  ];
+
+  // 音效系統
+  const initAudio = () => {
+    try {
+      if (!audioCtxRef.current) {
+        audioCtxRef.current = new (window.AudioContext || window.webkitAudioContext)();
+        masterGainRef.current = audioCtxRef.current.createGain();
+        masterGainRef.current.gain.setValueAtTime(0.3, audioCtxRef.current.currentTime);
+        masterGainRef.current.connect(audioCtxRef.current.destination);
+      }
+      if (audioCtxRef.current.state === 'suspended') audioCtxRef.current.resume();
+    } catch (e) {
+      console.error("Audio init failed", e);
+    }
+  };
+
+  const stopAllAudio = () => {
+    activeNodesRef.current.forEach(node => { try { node.stop(); } catch(e) {} try { node.disconnect(); } catch(e) {} });
+    activeNodesRef.current = [];
+  };
+
+  const playAtmosphere = (type) => {
+    initAudio();
+    stopAllAudio();
+    const ctx = audioCtxRef.current;
+    if (!ctx) return;
+    const now = ctx.currentTime;
+    const nodes = [];
+    
+    if (type === 'cafe') {
+      [200, 300, 400].forEach(f => {
+        const osc = ctx.createOscillator(); const g = ctx.createGain();
+        osc.frequency.setValueAtTime(f, now); g.gain.setValueAtTime(0.02, now);
+        osc.connect(g).connect(masterGainRef.current); osc.start(); nodes.push(osc, g);
+      });
+    } else if (type === 'rain') {
+      const bufferSize = 2 * ctx.sampleRate, noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate), output = noiseBuffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) output[i] = Math.random() * 2 - 1;
+      const whiteNoise = ctx.createBufferSource(); whiteNoise.buffer = noiseBuffer; whiteNoise.loop = true;
+      const g = ctx.createGain(); g.gain.setValueAtTime(0.05, now);
+      whiteNoise.connect(g).connect(masterGainRef.current); whiteNoise.start(); nodes.push(whiteNoise, g);
+    } else {
+      const osc = ctx.createOscillator(); const g = ctx.createGain();
+      osc.frequency.setValueAtTime(type === 'zen' ? 432 : 174, now); g.gain.setValueAtTime(0.08, now);
+      osc.connect(g).connect(masterGainRef.current); osc.start(); nodes.push(osc, g);
+    }
+    activeNodesRef.current = nodes;
+  };
+
+  const toggleTrack = (track) => {
+    if (activeTrackId === track.id) {
+      stopAllAudio();
+      setActiveTrackId(null);
+      setIsMeditating(false);
+    } else {
+      setActiveTrackId(track.id);
+      playAtmosphere(track.type);
+      setIsMeditating(true);
+    }
+  };
+
+  // 定時器與邏輯
+  useEffect(() => {
+    let timer;
+    if (isMeditating && meditationTime > 0) {
+      timer = setInterval(() => setMeditationTime(prev => prev - 1), 1000);
+    } else if (meditationTime === 0 && isMeditating) {
+      stopAllAudio();
+      setActiveTrackId(null);
+      setIsMeditating(false);
+      setCat(c => ({...c, exp: c.exp + 50}));
+      setWealth(w => w + 200);
+      setMeditationTime(300);
+    }
+    return () => clearInterval(timer);
+  }, [isMeditating, meditationTime]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setNonEssentialTasks(prev => prev.map(t => {
+        if (t.completed || t.timeLeft <= 0) return t;
+        const remaining = Math.max(0, t.endTime - Date.now());
+        return { ...t, timeLeft: remaining };
+      }));
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const handleLogin = () => {
+    if (userName.trim()) {
+      setUserSerial(`SN-${Math.random().toString(36).substring(2, 10).toUpperCase()}`);
+      setIsLoggedIn(true);
+    }
+  };
+
+  const formatTime = (ms) => {
+    if (ms <= 0) return "00:00:00";
+    const totalSec = Math.floor(ms / 1000);
+    const h = Math.floor(totalSec / 3600);
+    const m = Math.floor((totalSec % 3600) / 60);
+    const s = totalSec % 60;
+    return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+  };
+
+  const addNonEssentialTask = () => {
+    if (!nonEssentialInput.trim()) return;
+    const duration = 24 * 60 * 60 * 1000;
+    const now = Date.now();
+    const newTask = { id: Date.now(), text: nonEssentialInput, completed: false, endTime: now + duration, timeLeft: duration };
+    setNonEssentialTasks([newTask, ...nonEssentialTasks]);
+    setNonEssentialInput("");
+  };
+
+  const addLedgerEntry = () => {
+    if (!ledgerTitle || !ledgerAmount) return;
+    const entry = { id: Date.now(), title: ledgerTitle, amount: parseFloat(ledgerAmount), type: ledgerType, time: new Date().toLocaleDateString() };
+    setLedger([entry, ...ledger]);
+    setLedgerTitle(""); setLedgerAmount("");
+  };
+
+  const calculateBalance = () => ledger.reduce((acc, curr) => curr.type === 'income' ? acc + curr.amount : acc - curr.amount, 0);
+
+  const handlePetImage = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (ev) => setPetImg(ev.target.result);
+      reader.readAsDataURL(file);
+    }
+  };
+
+  if (!isLoggedIn) {
+    return (
+      <div className="min-h-screen bg-[#0c0a09] flex flex-col items-center justify-center p-4">
+        <div className="bg-[#1c1917] border border-stone-800 p-10 w-full max-w-md text-center">
+          <h2 className="text-[10px] font-bold mb-6 text-amber-600 tracking-[0.5em] uppercase">終端權限請求</h2>
+          <input 
+            type="text" 
+            value={userName} 
+            onChange={(e) => setUserName(e.target.value)} 
+            placeholder="請輸入操作員代號..." 
+            className="w-full bg-[#0c0a09] border border-stone-800 p-4 mb-6 text-center text-stone-200 focus:outline-none" 
+          />
+          <button onClick={handleLogin} className="w-full py-4 bg-amber-900 text-amber-100 font-black uppercase tracking-widest hover:bg-amber-800 transition-colors">初始化連結</button>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-[#0c0a09] text-stone-400 font-sans pb-10">
+      <header className="w-full p-6 flex justify-between items-center border-b border-stone-800 bg-[#1c1917]/90 backdrop-blur-md sticky top-0 z-50">
+        <div className="flex items-center gap-6">
+          <div className="px-6 py-2 bg-[#1c1917] border border-amber-900 font-black text-amber-600 tracking-tighter" style={{clipPath: 'polygon(10% 0, 100% 0, 90% 100%, 0 100%)'}}>生活大師</div>
+          <div className="flex items-center gap-4">
+            <div className="relative w-12 h-12 flex items-center justify-center">
+              <div className="w-10 h-10 rounded-full overflow-hidden bg-stone-800 flex items-center justify-center">
+                {userImg ? <img src={userImg} className="w-full h-full object-cover" alt="user" /> : <User size={18} className="text-stone-600" />}
+              </div>
+              <UIFrameSVG type={equippedFrame.type} color={equippedFrame.color} />
+            </div>
+            <div className="leading-tight">
+              <h1 className="text-sm font-black text-stone-200">{userName}</h1>
+              <div className="flex flex-col text-[9px] font-mono">
+                <span className="text-stone-600">ID: {userSerial}</span>
+                <span className="text-amber-600 font-bold">金幣: {wealth.toLocaleString()}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="flex gap-2">
+          {['dashboard', 'meditation', 'shop'].map(id => (
+            <button key={id} onClick={() => setActiveTab(id)} className={`px-6 py-2 text-[10px] font-black uppercase tracking-[0.2em] border transition-all ${activeTab === id ? 'bg-amber-900 text-white border-amber-500' : 'text-stone-600 border-stone-800 hover:border-stone-600'}`}>
+              {id === 'dashboard' ? '中央區域' : id === 'meditation' ? '冥想中心' : '黑市商場'}
+            </button>
+          ))}
+        </div>
+      </header>
+
+      <main className="max-w-7xl mx-auto p-6">
+        {activeTab === 'dashboard' && (
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <div className="lg:col-span-3 space-y-6">
+              <div className="bg-[#1c1917] border border-stone-800 border-l-2 border-l-amber-900">
+                <button onClick={() => setIsGuideOpen(!isGuideOpen)} className="w-full p-4 flex justify-between items-center text-[10px] font-black text-amber-600 uppercase">
+                  <span className="flex items-center gap-2"><BookOpen size={14} /> 終端操作指南</span>
+                  {isGuideOpen ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+                </button>
+                {isGuideOpen && (
+                  <div className="px-4 pb-4 text-[9px] text-stone-500 space-y-2 border-t border-stone-800 pt-2 leading-relaxed">
+                    <p>● <span className="text-amber-700">廢料回收者</span>：需於商店購買罐頭餵食，維持能量避免損壞。</p>
+                    <p>● <span className="text-amber-700">冥想中心</span>：進行 300s 深度同步可獲 200 金幣及經驗。</p>
+                    <p>● <span className="text-amber-700">復古蒸氣水槽</span>：點擊 CC 補水維持回收者運作性能。</p>
+                    <p>● <span className="text-amber-700">待辦事項</span>：每完成一項任務可獲 500 金幣高額補給。</p>
+                    <p>● <span className="text-amber-700">廢土紀錄</span>：提交每日生存日誌可領取 100 金幣定額獎勵。</p>
+                    <p>● <span className="text-amber-700">生存記帳</span>：精確紀錄每筆支出，掌握資源配給平衡。</p>
+                    <p>● <span className="text-amber-700">消費冷靜期</span>：登錄購物慾望，成功抵制可額外獲 300 獎金。</p>
+                  </div>
+                )}
+              </div>
+
+              <div className="bg-[#1c1917] border border-stone-800 p-6 border-l-2 border-l-blue-900">
+                <h3 className="text-[10px] font-black text-blue-400 mb-4 uppercase flex justify-between items-center">
+                  <span><Droplets size={14} className="inline mr-2"/> 復古蒸氣水槽</span>
+                  <span className="font-mono">{cat.hydration.toFixed(0)}%</span>
+                </h3>
+                <div className="h-40 w-full bg-black border-2 border-stone-700 rounded p-2 relative mb-4">
+                  <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-6 bg-stone-900 border border-stone-700 h-32 rounded-full overflow-hidden">
+                    <div className="absolute bottom-0 w-full bg-blue-600 transition-all duration-1000" style={{height: `${cat.hydration}%`}}></div>
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-2">
+                  <button onClick={() => setCat(c => ({...c, hydration: Math.min(100, c.hydration + 5)}))} className="bg-stone-900 border border-stone-800 py-2 text-[9px] hover:bg-blue-900/20 transition-all font-mono">500CC</button>
+                  <button onClick={() => setCat(c => ({...c, hydration: Math.min(100, c.hydration + 10)}))} className="bg-stone-900 border border-stone-800 py-2 text-[9px] hover:bg-blue-900/20 transition-all font-mono">1000CC</button>
+                </div>
+              </div>
+
+              <div className="bg-[#1c1917] border border-stone-800 p-6 border-l-2 border-l-purple-900">
+                <h3 className="text-[10px] font-black text-purple-400 mb-4 uppercase"><Timer size={14} className="inline mr-2"/> 消費冷靜期</h3>
+                <div className="space-y-3">
+                  <div className="flex gap-1">
+                    <input value={nonEssentialInput} onChange={e => setNonEssentialInput(e.target.value)} placeholder="商品名稱..." className="flex-1 bg-black border border-stone-800 px-3 py-2 text-[10px] focus:outline-none" />
+                    <button onClick={addNonEssentialTask} className="bg-purple-900 px-3 text-white text-[10px] font-black">監控</button>
+                  </div>
+                  <div className="space-y-2 max-h-48 overflow-y-auto pr-1">
+                    {nonEssentialTasks.map(task => (
+                      <div key={task.id} className={`p-2 border border-stone-800 bg-black/40 ${task.completed ? 'opacity-30' : ''}`}>
+                        <div className="flex justify-between text-[9px] mb-1">
+                          <span className="font-bold truncate">{task.text}</span>
+                          <span className="font-mono text-stone-600">{formatTime(task.timeLeft)}</span>
+                        </div>
+                        {!task.completed && (
+                          <button disabled={task.timeLeft > 0} onClick={() => { setWealth(w => w + 300); setNonEssentialTasks(prev => prev.map(t => t.id === task.id ? {...t, completed: true} : t)); }} className={`w-full py-1 text-[8px] font-black border ${task.timeLeft > 0 ? 'border-stone-800 text-stone-700' : 'border-emerald-600 text-emerald-500 hover:bg-emerald-900/20'}`}>
+                            {task.timeLeft > 0 ? '冷靜中...' : '成功省錢 (領取獎勵)'}
+                          </button>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="lg:col-span-6 space-y-6">
+              <div className="bg-[#1c1917] border border-stone-800 p-8 text-center relative group">
+                <input value={petName} onChange={e => setPetName(e.target.value)} className="bg-transparent border-b border-stone-800 text-center text-stone-300 font-black text-sm uppercase mb-6 w-full focus:outline-none" />
+                <div onClick={() => petInputRef.current?.click()} className="relative w-40 h-40 mx-auto mb-4 bg-stone-900 rounded-full border-2 border-stone-800 flex items-center justify-center overflow-hidden cursor-pointer hover:border-amber-600 transition-colors">
+                  {petImg ? <img src={petImg} className="w-full h-full object-cover grayscale" alt="pet" /> : <Cat size={48} className="text-stone-700" />}
+                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
+                    <Upload size={24} className="text-amber-500" />
+                  </div>
+                </div>
+                <input type="file" ref={petInputRef} onChange={handlePetImage} className="hidden" accept="image/*" />
+                <p className="text-[10px] text-stone-600 mb-4 italic uppercase tracking-widest">點擊上傳感測影像</p>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="bg-black p-2 border border-stone-800">
+                    <div className="flex justify-between text-[8px] mb-1 uppercase"><span>能量 (需餵食)</span><span>{cat.hunger}%</span></div>
+                    <div className="h-1 bg-stone-900"><div className="h-full bg-amber-600 transition-all duration-500" style={{width: `${cat.hunger}%`}}></div></div>
+                  </div>
+                  <div className="bg-black p-2 border border-stone-800">
+                    <div className="flex justify-between text-[8px] mb-1 uppercase"><span>水分 (復古水槽)</span><span>{cat.hydration}%</span></div>
+                    <div className="h-1 bg-stone-900"><div className="h-full bg-blue-600 transition-all duration-500" style={{width: `${cat.hydration}%`}}></div></div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-[#1c1917] border border-stone-800 p-6 border-t-2 border-t-emerald-900">
+                <div className="flex justify-between items-center mb-6">
+                  <h3 className="text-[10px] font-black text-emerald-500 uppercase flex items-center gap-2"><Wallet size={14} /> 生存記帳任務</h3>
+                  <span className="font-mono text-emerald-400 font-bold text-sm">{calculateBalance().toLocaleString()}</span>
+                </div>
+                <div className="flex flex-col md:flex-row gap-6">
+                  <div className="md:w-1/3 space-y-2">
+                    <select value={ledgerType} onChange={e => setLedgerType(e.target.value)} className="w-full bg-black border border-stone-800 text-[10px] p-2 focus:outline-none">
+                      <option value="expense">支出</option><option value="income">收入</option>
+                    </select>
+                    <input value={ledgerAmount} onChange={e => setLedgerAmount(e.target.value)} placeholder="金額" type="number" className="w-full bg-black border border-stone-800 p-2 text-[10px] focus:outline-none" />
+                    <input value={ledgerTitle} onChange={e => setLedgerTitle(e.target.value)} placeholder="項目..." className="w-full bg-black border border-stone-800 p-2 text-[10px] focus:outline-none" />
+                    <button onClick={addLedgerEntry} className="w-full py-2 bg-emerald-900 text-white text-[10px] font-black uppercase">紀錄</button>
+                  </div>
+                  <div className="md:w-2/3 grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-48 overflow-y-auto">
+                    {ledger.map(item => (
+                      <div key={item.id} className="bg-black/40 border border-stone-900 p-2 flex justify-between items-center">
+                        <div className="flex flex-col min-w-0"><span className="text-[9px] font-bold truncate">{item.title}</span><span className="text-[7px] text-stone-600 font-mono">{item.time}</span></div>
+                        <span className={`text-[10px] font-mono ${item.type === 'income' ? 'text-emerald-500' : 'text-red-500'}`}>{item.type === 'income' ? '+' : '-'}{item.amount}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="lg:col-span-3 space-y-6">
+              <div className="bg-[#1c1917] border border-stone-800 p-6 border-l-2 border-l-stone-600">
+                <h3 className="text-[10px] font-black text-stone-400 mb-4 uppercase flex items-center gap-2"><ListTodo size={14} /> 代辦事項任務</h3>
+                <input value={todoInput} onChange={e => setTodoInput(e.target.value)} onKeyDown={e => e.key === 'Enter' && (setTodos([...todos, {id: Date.now(), text: todoInput, completed: false}]), setTodoInput(""))} placeholder="新增任務..." className="w-full bg-black border border-stone-800 p-2 text-[10px] mb-4 focus:outline-none" />
+                <div className="space-y-2 max-h-40 overflow-y-auto pr-1">
+                  {todos.map(todo => (
+                    <div key={todo.id} className={`p-2 border border-stone-800 flex justify-between items-center ${todo.completed ? 'opacity-30' : 'bg-stone-900/50'}`}>
+                      <span className="text-[10px] truncate" onClick={() => { if(!todo.completed) { setWealth(w => w + 500); setCat(c => ({...c, exp: c.exp + 20})); } setTodos(prev => prev.map(t => t.id === todo.id ? {...t, completed: !t.completed} : t)); }}>{todo.text}</span>
+                      <X size={10} className="cursor-pointer text-stone-600 hover:text-red-500" onClick={() => setTodos(todos.filter(t => t.id !== todo.id))} />
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="bg-[#1c1917] border border-stone-800 p-6 border-l-2 border-l-amber-600">
+                <h3 className="text-[10px] font-black text-amber-500 mb-4 uppercase flex items-center gap-2"><Cpu size={14} /> 廢土紀錄任務</h3>
+                <textarea value={input} onChange={e => setInput(e.target.value)} placeholder="今日紀錄..." className="w-full h-20 bg-black border border-stone-900 p-2 text-xs text-stone-400 mb-3 focus:outline-none resize-none" />
+                <button onClick={() => { if(!input) return; setDiaries(d => [{id: Date.now(), text: input, time: new Date().toLocaleTimeString()}, ...d]); setWealth(w => w + 100); setInput(""); }} className="w-full py-2 bg-amber-900 text-white font-black text-[10px] uppercase">提交紀錄 (+100)</button>
+              </div>
+
+              <div className="bg-[#1c1917] border border-stone-800 p-6 border-l-2 border-l-stone-400">
+                <h3 className="text-[10px] font-black text-stone-400 mb-4 uppercase flex items-center gap-2"><History size={14} /> 歷史存檔</h3>
+                <div className="space-y-2 max-h-60 overflow-y-auto pr-1">
+                  {diaries.map(d => (
+                    <div key={d.id} className="p-2 border border-stone-900 bg-black/40 text-[9px]">
+                      <div className="flex justify-between items-center mb-1 text-amber-900 font-mono">{d.time} <Trash2 size={8} className="cursor-pointer" onClick={() => setDiaries(diaries.filter(x => x.id !== d.id))} /></div>
+                      <div className="text-stone-500 leading-tight">{d.text}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {activeTab === 'meditation' && (
+          <div className="max-w-4xl mx-auto flex flex-col items-center py-10">
+            <div className="bg-[#1c1917] border border-stone-800 p-12 w-full text-center">
+              <h2 className="text-[10px] font-black text-amber-600 uppercase mb-4 tracking-widest">冥想任務：深度意識同步</h2>
+              <div className="text-6xl font-mono text-stone-200 mb-10 tracking-widest">{Math.floor(meditationTime / 60).toString().padStart(2, '0')}:{(meditationTime % 60).toString().padStart(2, '0')}</div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-10">
+                {musicTracks.map(track => (
+                  <button key={track.id} onClick={() => toggleTrack(track)} className={`p-6 border text-left flex gap-4 items-center transition-all ${activeTrackId === track.id ? 'border-amber-500 bg-amber-900/20' : 'border-stone-900 bg-black hover:border-stone-700'}`}>
+                    <track.icon size={24} className={activeTrackId === track.id ? 'text-amber-500' : 'text-stone-700'} />
+                    <div><div className="text-xs font-black text-stone-200 uppercase">{track.name}</div><div className="text-[9px] text-stone-600">{track.subtitle}</div></div>
+                  </button>
+                ))}
+              </div>
+              <button onClick={() => { if (isMeditating) { stopAllAudio(); setActiveTrackId(null); setIsMeditating(false); } else { toggleTrack(musicTracks[0]); } }} className={`px-12 py-4 text-[11px] font-black uppercase tracking-widest transition-all ${isMeditating ? 'bg-red-900 text-white' : 'bg-amber-900 text-white hover:bg-amber-800'}`}>{isMeditating ? '中止連結' : '開始深度同步 (300s)'}</button>
+            </div>
+          </div>
+        )}
+
+        {activeTab === 'shop' && (
+          <div className="max-w-2xl mx-auto">
+            <div className="bg-[#1c1917] border border-stone-800 p-6">
+              <h2 className="text-[10px] font-black mb-6 text-emerald-600 uppercase flex items-center gap-2"><Beef size={14} /> 寵物補給 (餵食廢料回收者)</h2>
+              <div className="space-y-4">
+                {supplyList.map(item => (
+                  <div key={item.id} className="p-4 bg-black border border-stone-800 flex justify-between items-center">
+                    <div><div className="text-xs font-bold text-stone-200">{item.name}</div><div className="text-[9px] text-stone-500">{item.desc}</div></div>
+                    <button onClick={() => { if (wealth >= item.cost) { setWealth(w => w - item.cost); setCat(c => ({...c, hunger: Math.min(100, c.hunger + item.hunger), exp: c.exp + item.exp})); } }} disabled={wealth < item.cost} className="px-4 py-2 bg-emerald-900 text-white text-[10px] font-black disabled:opacity-20">{item.cost} 金幣</button>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="mt-6 bg-[#1c1917] border border-stone-800 p-6">
+               <h2 className="text-[10px] font-black mb-4 text-stone-500 uppercase flex items-center gap-2"><Lock size={14} /> 黑市商場 (其餘模組關閉)</h2>
+               <div className="p-4 bg-black/40 border border-stone-900 flex justify-between items-center grayscale">
+                 <div className="text-[10px] text-stone-600 italic">資源補給線已切斷，暫不開放訂閱。</div>
+               </div>
+            </div>
+          </div>
+        )}
+      </main>
+    </div>
+  );
+}
+        // ---------------------------
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        try {
+            if (typeof GameDashboard !== 'undefined') root.render(<GameDashboard />);
+            else if (typeof App !== 'undefined') root.render(<App />);
+            else root.render(<div className="p-10 text-red-500 font-bold">Error: Main component (GameDashboard or App) not found.</div>);
+        } catch (e) {
+            root.render(<div className="p-10 text-red-500">Render Error: {e.message}</div>);
+        }
+    </script>
+</body>
+</html>
