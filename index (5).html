@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <!-- PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#ffffff">
+    <title>生活大師</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script crossorigin src="https://unpkg.com/react@18.2.0/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/lucide@0.263.1"></script>
+    <style>
+        @keyframes slide-up { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-slide-up { animation: slide-up 0.4s ease-out forwards; }
+        body { background-color: #f8fafc; color: #0f172a; overscroll-behavior-y: none; }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        const { useState, useEffect, useMemo, useRef } = React;
+        
+            const createIcon = (name) => ({size=24, className, ...p}) => {
+                const r = React.useRef(null);
+                React.useEffect(()=>{
+                    if(window.lucide && window.lucide.icons[name] && r.current){
+                        const s = window.lucide.createElement(window.lucide.icons[name]);
+                        s.setAttribute("width", size); s.setAttribute("height", size);
+                        if(className) s.setAttribute("class", className);
+                        r.current.innerHTML=""; r.current.appendChild(s);
+                    }
+                },[name,size,className]);
+                return React.createElement('span', {ref:r, style:{display:"inline-flex", verticalAlign:"middle"}, ...p});
+            };
+            const Icons = new Proxy({}, { get: (t, n) => createIcon(n) });
+            
+        
+        // --- User Code Injection ---
+        <!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生活大師 - 廢土工業終端 V15</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <style>
+        :root {
+            --terminal-color: #0c0a09;
+            --active-bg-color: #0c0a09;
+        }
+        body {
+            background-color: var(--active-bg-color);
+            margin: 0;
+            overflow-x: hidden;
+            color: #a8a29e;
+            font-family: 'PingFang TC', 'Microsoft JhengHei', monospace;
+            transition: background-color 0.5s ease;
+        }
+        .bg-layer {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: -1;
+            background-color: var(--active-bg-color);
+        }
+        .wasteland-panel {
+            background: rgba(28, 25, 23, 0.9);
+            border: 1px solid #44403c;
+            position: relative;
+            backdrop-filter: blur(8px);
+        }
+        .scrap-metal-frame {
+            position: relative;
+            padding: 8px 30px;
+            background: #1c1917;
+            border: 1px solid #78350f;
+            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
+        }
+        .nav-button-active {
+            background: #78350f;
+            color: #fafaf9;
+            border: 1px solid #fbbf24;
+        }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #78350f; }
+        
+        .steam-tank-container {
+            height: 180px;
+            width: 100%;
+            background: #0c0a09;
+            border: 2px solid #57534e;
+            position: relative;
+            border-radius: 4px;
+            padding: 10px;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.8);
+        }
+        .gauge-circle {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 36px;
+            height: 36px;
+            border: 2px solid #78350f;
+            border-radius: 50%;
+            background: #1c1917;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .gauge-needle {
+            width: 2px;
+            height: 14px;
+            background: #ef4444;
+            transform-origin: bottom center;
+            transition: transform 0.5s ease;
+        }
+        .water-tube {
+            width: 20px;
+            height: 140px;
+            background: #1c1917;
+            border: 1px solid #57534e;
+            margin: 0 auto;
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .water-inner {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background: linear-gradient(to top, #1e3a8a, #3b82f6);
+            transition: height 1s ease-in-out;
+        }
+
+        .guide-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height(2000px) 0.4s ease-out;
+        }
+        .guide-content.open {
+            max-height: 2000px;
+        }
+
+        .avatar-ui-container {
+            position: relative;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .avatar-frame-ui {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 20;
+            pointer-events: none;
+        }
+        .locked-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(12, 10, 9, 0.9);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 50;
+            backdrop-filter: blur(4px);
+            border: 1px solid #78350f;
+        }
+    </style>
+</head>
+<body id="main-body">
+    <div class="bg-layer" id="bg-target"></div>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+
+        const Icon = ({ name, color = 'currentColor', size = 24, className = "" }) => {
+            const iconRef = useRef(null);
+            useEffect(() => {
+                if (window.lucide && iconRef.current) {
+                    iconRef.current.innerHTML = '';
+                    const formattedName = name.toLowerCase().replace(/([a-z])([A-Z])/g, '$1-$2');
+                    const iconElement = document.createElement('i');
+                    iconElement.setAttribute('data-lucide', formattedName);
+                    iconRef.current.appendChild(iconElement);
+                    window.lucide.createIcons({
+                        attrs: { stroke: color, 'stroke-width': 2, width: size, height: size, class: className },
+                        nameAttr: 'data-lucide'
+                    });
+                }
+            }, [name, color, size, className]);
+            return <span ref={iconRef} className={`inline-flex items-center justify-center ${className}`} style={{ width: size, height: size }}></span>;
+        };
+
+        const UIFrameSVG = ({ type, color }) => {
+            if (!type) return null;
+            const stroke = color || "#fbbf24";
+            const renderPath = () => {
+                switch(type) {
+                    case 'ui_scanner': return <g><rect x="2" y="2" width="96" height="96" fill="none" stroke={stroke} strokeWidth="1" strokeDasharray="4 2"/><path d="M10 2 L2 2 L2 10 M90 2 L98 2 L98 10 M98 90 L98 98 L90 98 M10 98 L2 98 L2 90" stroke={stroke} strokeWidth="6"/></g>;
+                    case 'ui_circuit': return <g><circle cx="50" cy="50" r="48" fill="none" stroke={stroke} strokeWidth="2"/><circle cx="50" cy="5" r="3" fill={stroke}/><circle cx="95" cy="50" r="3" fill={stroke}/><circle cx="50" cy="95" r="3" fill={stroke}/><circle cx="5" cy="50" r="3" fill={stroke}/></g>;
+                    case 'ui_armor': return <path d="M20 2 H80 L98 20 V80 L80 98 H20 L2 80 V20 Z" fill="none" stroke={stroke} strokeWidth="4"/>;
+                    case 'ui_data': return <g><rect x="5" y="5" width="90" height="90" fill="none" stroke={stroke} strokeWidth="2"/><path d="M5 20 H15 M5 40 H15 M5 60 H15 M5 80 H15 M85 20 H95 M85 40 H95 M85 60 H95 M85 80 H95" stroke={stroke} strokeWidth="3"/></g>;
+                    case 'ui_target': return <g><circle cx="50" cy="50" r="40" fill="none" stroke={stroke} strokeWidth="1"/><path d="M50 5 V20 M50 80 V95 M5 50 H20 M80 50 H95" stroke={stroke} strokeWidth="4"/></g>;
+                    case 'ui_tech_h': return <g><path d="M5 30 V10 H30 M70 10 H95 V30 M5 70 V90 H30 M70 90 H95 V70" stroke={stroke} strokeWidth="4"/><rect x="40" y="5" width="20" height="3" fill={stroke}/><rect x="40" y="92" width="20" height="3" fill={stroke}/></g>;
+                    case 'ui_sub': return <g><circle cx="50" cy="50" r="46" fill="none" stroke={stroke} strokeWidth="4" strokeDasharray="1 4"/><circle cx="50" cy="50" r="40" fill="none" stroke={stroke} strokeWidth="1"/></g>;
+                    case 'ui_hexagon': return <path d="M50 5 L93 27.5 V72.5 L50 95 L7 72.5 V27.5 Z" fill="none" stroke={stroke} strokeWidth="3"/>;
+                    case 'ui_bracket': return <g><path d="M30 5 H5 V95 H30 M70 5 H95 V95 H70" fill="none" stroke={stroke} strokeWidth="4"/><rect x="48" y="5" width="4" height="10" fill={stroke}/><rect x="48" y="85" width="4" height="10" fill={stroke}/></g>;
+                }
+            };
+            return <svg className="avatar-frame-ui" viewBox="0 0 100 100">{renderPath()}</svg>;
+        };
+
+        const App = () => {
+            const [isLoggedIn, setIsLoggedIn] = useState(false);
+            const [userName, setUserName] = useState("");
+            const [userSerial, setUserSerial] = useState("");
+            const [userImg, setUserImg] = useState(null); 
+            const [activeTab, setActiveTab] = useState('dashboard');
+            const [isGuideOpen, setIsGuideOpen] = useState(false);
+
+            const [wealth, setWealth] = useState(0); 
+            const [cat, setCat] = useState({ level: 0, exp: 0, maxExp: 100, hunger: 0, hydration: 0 }); 
+            const [todos, setTodos] = useState([]); 
+            const [todoInput, setTodoInput] = useState("");
+            const [isMeditating, setIsMeditating] = useState(false);
+            const [meditationTime, setMeditationTime] = useState(300); 
+            const [activeTrackId, setActiveTrackId] = useState(null);
+            const audioCtxRef = useRef(null);
+            const activeNodesRef = useRef([]);
+            const masterGainRef = useRef(null);
+            const [equippedFrame, setEquippedFrame] = useState({ type: null, color: null });
+            const [subscriptions, setSubscriptions] = useState([]);
+            const [petName, setPetName] = useState("廢料回收者");
+            const [petImg, setPetImg] = useState(null);
+            const [diaries, setDiaries] = useState([]);
+            const [input, setInput] = useState("");
+            const [currentMood, setCurrentMood] = useState("待機中...");
+            const [activeBgId, setActiveBgId] = useState('default');
+            const [unlockedBgs, setUnlockedBgs] = useState(['default']);
+            
+            const [ledger, setLedger] = useState([]);
+            const [ledgerTitle, setLedgerTitle] = useState("");
+            const [ledgerAmount, setLedgerAmount] = useState("");
+            const [ledgerType, setLedgerType] = useState("expense");
+
+            // 非必要消費任務狀態
+            const [nonEssentialTasks, setNonEssentialTasks] = useState([]);
+            const [nonEssentialInput, setNonEssentialInput] = useState("");
+
+            const userInputRef = useRef(null);
+            const petInputRef = useRef(null);
+
+            const musicTracks = [
+                { id: 'track_cafe', name: '廢土角落咖啡廳', type: 'cafe', icon: 'Coffee', subtitle: '溫和爵士與背景環境音' },
+                { id: 'track_spa', name: '按摩靜心 SPA', type: 'spa', icon: 'Flower2', subtitle: '舒緩的深層共鳴頻率' },
+                { id: 'track_rain', name: '鏽蝕鐵皮雨聲', type: 'rain', icon: 'CloudRain', subtitle: '白噪音掩蓋環境雜訊' },
+                { id: 'track_zen', name: '數位禪宗空間', type: 'zen', icon: 'Sun', subtitle: '432Hz 能量頻率引導' }
+            ];
+
+            const frames = [
+                { name: "掃描介面", type: "ui_scanner", color: "#22c55e", cost: 500 },
+                { name: "核心電路", type: "ui_circuit", color: "#3b82f6", cost: 1000 },
+                { name: "重裝甲片", type: "ui_armor", color: "#71717a", cost: 1500 },
+                { name: "數據終端", type: "ui_data", color: "#a855f7", cost: 2000 },
+                { name: "精密瞄準", type: "ui_target", color: "#ef4444", cost: 3000 },
+                { name: "科技面板", type: "ui_tech_h", color: "#fbbf24", cost: 4500 },
+                { name: "深海視窗", type: "ui_sub", color: "#06b6d4", cost: 6000 },
+                { name: "六角蜂巢", type: "ui_hexagon", color: "#f97316", cost: 8000 },
+                { name: "系統邊框", type: "ui_bracket", color: "#d6d3d1", cost: 12000 }
+            ];
+
+            const backgrounds = [
+                { id: 'default', name: '終端黑', color: '#0c0a09', cost: 0 },
+                { id: 'moss_green', name: '苔蘚綠', color: '#061a0a', cost: 5000 },
+                { id: 'cobalt_blue', name: '鈷藍', color: '#050a14', cost: 8000 },
+                { id: 'crimson_rust', name: '深鏽紅', color: '#1a0805', cost: 12000 },
+                { id: 'twilight_purple', name: '暮光紫', color: '#12051a', cost: 15000 },
+                { id: 'desert_sand', name: '荒漠褐', color: '#1c160c', cost: 20000 }
+            ];
+
+            const subscriptionList = [
+                { id: 'custom_bg', name: '自定義背景訂閱', cost: 100, desc: '上傳本地圖片，一個月效期 (需現金付費)', isCash: true, isLocked: true },
+                { id: 'resource_line', name: '資源補給線', cost: 8000, desc: '每 10 秒自動產生 5 金幣收益', isCash: false, isLocked: false }
+            ];
+
+            const supplyList = [
+                { id: 'pet_can', name: '寵物罐頭', cost: 150, hunger: 30, exp: 20, desc: '特級合成肉，大幅補充能量。' },
+                { id: 'pet_snack', name: '寵物零食', cost: 50, hunger: 10, exp: 5, desc: '脫水昆蟲乾，小幅提升經驗。' }
+            ];
+
+            const initAudio = () => {
+                if (!audioCtxRef.current) {
+                    audioCtxRef.current = new (window.AudioContext || window.webkitAudioContext)();
+                    masterGainRef.current = audioCtxRef.current.createGain();
+                    masterGainRef.current.gain.setValueAtTime(0.3, audioCtxRef.current.currentTime);
+                    masterGainRef.current.connect(audioCtxRef.current.destination);
+                }
+                if (audioCtxRef.current.state === 'suspended') audioCtxRef.current.resume();
+            };
+
+            const stopAllAudio = () => {
+                activeNodesRef.current.forEach(node => { try { node.stop(); } catch(e) {} try { node.disconnect(); } catch(e) {} });
+                activeNodesRef.current = [];
+            };
+
+            const playAtmosphere = (type) => {
+                initAudio(); stopAllAudio();
+                const ctx = audioCtxRef.current;
+                const now = ctx.currentTime;
+                const nodes = [];
+                if (type === 'cafe') {
+                    [200, 300, 400].forEach(f => {
+                        const osc = ctx.createOscillator(); const g = ctx.createGain();
+                        osc.frequency.setValueAtTime(f, now); g.gain.setValueAtTime(0.02, now);
+                        osc.connect(g).connect(masterGainRef.current); osc.start(); nodes.push(osc, g);
+                    });
+                } else if (type === 'spa') {
+                    [174, 220].forEach(f => {
+                        const osc = ctx.createOscillator(); const g = ctx.createGain();
+                        osc.frequency.setValueAtTime(f, f, now); g.gain.setValueAtTime(0.05, now);
+                        osc.connect(g).connect(masterGainRef.current); osc.start(); nodes.push(osc, g);
+                    });
+                } else if (type === 'rain') {
+                    const noise = ctx.createBufferSource();
+                    const buffer = ctx.createBuffer(1, ctx.sampleRate * 2, ctx.sampleRate);
+                    const data = buffer.getChannelData(0);
+                    for (let i = 0; i < data.length; i++) data[i] = Math.random() * 2 - 1;
+                    noise.buffer = buffer; noise.loop = true;
+                    const g = ctx.createGain(); g.gain.setValueAtTime(0.05, now);
+                    noise.connect(g).connect(masterGainRef.current); noise.start(); nodes.push(noise, g);
+                } else if (type === 'zen') {
+                    const osc = ctx.createOscillator(); const g = ctx.createGain();
+                    osc.frequency.setValueAtTime(432, now); g.gain.setValueAtTime(0.08, now);
+                    osc.connect(g).connect(masterGainRef.current); osc.start(); nodes.push(osc, g);
+                }
+                activeNodesRef.current = nodes;
+            };
+
+            const toggleTrack = (track) => {
+                if (activeTrackId === track.id) { stopAllAudio(); setActiveTrackId(null); setIsMeditating(false); }
+                else { setActiveTrackId(track.id); playAtmosphere(track.type); setIsMeditating(true); }
+            };
+
+            useEffect(() => {
+                let timer;
+                if (isMeditating && meditationTime > 0) {
+                    timer = setInterval(() => setMeditationTime(prev => prev - 1), 1000);
+                } else if (meditationTime === 0 && isMeditating) {
+                    stopAllAudio(); setActiveTrackId(null); setIsMeditating(false);
+                    setCat(c => ({...c, exp: c.exp + 50})); setWealth(w => w + 200);
+                }
+                return () => clearInterval(timer);
+            }, [isMeditating, meditationTime]);
+
+            useEffect(() => {
+                const interval = setInterval(() => {
+                    setNonEssentialTasks(prev => prev.map(t => {
+                        if (t.completed || t.timeLeft <= 0) return t;
+                        return { ...t, timeLeft: Math.max(0, t.endTime - Date.now()) };
+                    }));
+                }, 1000);
+                return () => clearInterval(interval);
+            }, []);
+
+            useEffect(() => {
+                const subTimer = setInterval(() => { if (subscriptions.includes('resource_line')) setWealth(w => w + 5); }, 10000);
+                return () => clearInterval(subTimer);
+            }, [subscriptions]);
+
+            const handleLogin = () => { if (userName.trim()) { setUserSerial(`SN-${Math.random().toString(36).substring(2, 10).toUpperCase()}`); setIsLoggedIn(true); }};
+            const toggleTodo = (id) => {
+                setTodos(t => t.map(item => {
+                    if (item.id === id) {
+                        if (!item.completed) { setWealth(w => w + 500); setCat(c => ({...c, exp: c.exp + 20})); }
+                        return { ...item, completed: !item.completed };
+                    }
+                    return item;
+                }));
+            };
+            const handleBuyFrame = (frame) => { if (wealth < frame.cost) return; setWealth(p => p - frame.cost); setEquippedFrame({ type: frame.type, color: frame.color }); };
+            const handleSubscribe = (id, cost) => {
+                const sub = subscriptionList.find(s => s.id === id);
+                if (sub?.isLocked || subscriptions.includes(id)) return;
+                if (sub.isCash) { setSubscriptions([...subscriptions, id]); } 
+                else if (wealth >= cost) { setWealth(w => w - cost); setSubscriptions([...subscriptions, id]); }
+            };
+            const handleBuySupply = (supply) => {
+                if (wealth < supply.cost) return;
+                setWealth(w => w - supply.cost);
+                setCat(c => ({ ...c, hunger: Math.min(100, c.hunger + supply.hunger), exp: c.exp + supply.exp }));
+            };
+            const handleUnlockBg = (bg) => {
+                if (unlockedBgs.includes(bg.id)) { setActiveBgId(bg.id); document.documentElement.style.setProperty('--active-bg-color', bg.color); } 
+                else { if (wealth < bg.cost) return; setWealth(w => w - bg.cost); setUnlockedBgs([...unlockedBgs, bg.id]); setActiveBgId(bg.id); document.documentElement.style.setProperty('--active-bg-color', bg.color); }
+            };
+
+            const addLedgerEntry = () => {
+                if (!ledgerTitle || !ledgerAmount) return;
+                const entry = {
+                    id: Date.now(),
+                    title: ledgerTitle,
+                    amount: parseFloat(ledgerAmount),
+                    type: ledgerType,
+                    time: new Date().toLocaleDateString()
+                };
+                setLedger([entry, ...ledger]);
+                setLedgerTitle("");
+                setLedgerAmount("");
+            };
+
+            const calculateBalance = () => {
+                return ledger.reduce((acc, curr) => {
+                    return curr.type === 'income' ? acc + curr.amount : acc - curr.amount;
+                }, 0);
+            };
+
+            const formatTime = (ms) => {
+                if (ms <= 0) return "00:00:00";
+                const totalSec = Math.floor(ms / 1000);
+                const h = Math.floor(totalSec / 3600);
+                const m = Math.floor((totalSec % 3600) / 60);
+                const s = totalSec % 60;
+                return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+            };
+
+            const addNonEssentialTask = () => {
+                if (!nonEssentialInput.trim()) return;
+                const duration = 24 * 60 * 60 * 1000; // 24小時
+                const now = Date.now();
+                const newTask = { 
+                    id: Date.now(), 
+                    text: nonEssentialInput, 
+                    completed: false, 
+                    endTime: now + duration,
+                    timeLeft: duration
+                };
+                setNonEssentialTasks([newTask, ...nonEssentialTasks]);
+                setNonEssentialInput("");
+            };
+
+            const completeSaving = (id) => {
+                setNonEssentialTasks(tasks => tasks.map(t => {
+                    if (t.id === id && !t.completed && t.timeLeft <= 0) {
+                        setWealth(w => w + 300);
+                        return { ...t, completed: true };
+                    }
+                    return t;
+                }));
+            };
+
+            if (!isLoggedIn) {
+                return (
+                    <div className="min-h-screen bg-[#0c0a09] flex flex-col items-center justify-center p-4">
+                        <div className="wasteland-panel p-10 w-full max-w-md text-center border-stone-800">
+                            <h2 className="text-[10px] font-bold mb-6 text-amber-600 tracking-[0.5em] uppercase">終端權限請求</h2>
+                            <input type="text" value={userName} onChange={(e) => setUserName(e.target.value)} placeholder="請輸入操作員代號..." className="w-full bg-[#1c1917] border border-stone-800 p-4 mb-6 text-center text-stone-200 focus:outline-none" />
+                            <button onClick={handleLogin} className="w-full py-4 bg-amber-900 text-amber-100 font-black uppercase tracking-widest">初始化連結</button>
+                        </div>
+                    </div>
+                );
+            }
+
+            return (
+                <div className="min-h-screen pb-10 flex flex-col items-center relative z-10">
+                    <header className="w-full max-w-6xl p-6 flex justify-between items-center z-20 border-b border-stone-800 bg-[#1c1917]/90 backdrop-blur-md sticky top-0">
+                        <div className="flex items-center gap-6">
+                            <div className="scrap-metal-frame font-black text-amber-600 tracking-tighter">生活大師</div>
+                            <div className="flex items-center gap-4">
+                                <div className="avatar-ui-container cursor-pointer" onClick={() => userInputRef.current.click()}>
+                                    <div className="w-10 h-10 rounded-full overflow-hidden bg-stone-800 flex items-center justify-center relative">
+                                        {userImg ? <img src={userImg} className="w-full h-full object-cover" /> : <Icon name="User" size={18} className="text-stone-600" />}
+                                    </div>
+                                    <UIFrameSVG type={equippedFrame.type} color={equippedFrame.color} />
+                                    <input type="file" ref={userInputRef} className="hidden" accept="image/*" onChange={(e) => {
+                                        const file = e.target.files[0]; if (file) { const reader = new FileReader(); reader.onloadend = () => setUserImg(reader.result); reader.readAsDataURL(file); }
+                                    }} />
+                                </div>
+                                <div className="leading-tight">
+                                    <h1 className="text-sm font-black text-stone-200">{userName}</h1>
+                                    <div className="flex flex-col text-[9px] font-mono mt-0.5">
+                                        <span className="text-stone-600">識別碼: {userSerial}</span>
+                                        <span className="text-amber-600 font-bold">金幣: {wealth.toLocaleString()}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="flex gap-2">
+                            {['dashboard', 'meditation', 'shop'].map(id => (
+                                <button key={id} onClick={() => setActiveTab(id)} className={`px-6 py-2 text-[10px] font-black uppercase tracking-[0.2em] border ${activeTab === id ? 'nav-button-active' : 'text-stone-600 border-stone-800'}`}>
+                                    {id === 'dashboard' ? '中央區域' : id === 'meditation' ? '冥想中心' : '黑市商場'}
+                                </button>
+                            ))}
+                        </div>
+                    </header>
+
+                    {activeTab === 'dashboard' && (
+                        <main className="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-12 gap-6 p-6">
+                            
+                            <div className="lg:col-span-3 space-y-6">
+                                <div className="wasteland-panel border-l-2 border-l-amber-900 overflow-hidden">
+                                    <button onClick={() => setIsGuideOpen(!isGuideOpen)} className="w-full p-4 flex justify-between items-center text-[10px] font-black text-amber-600 uppercase hover:bg-stone-900/50 transition-colors">
+                                        <span className="flex items-center gap-2"><Icon name="BookOpen" size={14} /> 終端操作指南</span>
+                                        <Icon name={isGuideOpen ? "ChevronUp" : "ChevronDown"} size={14} className="text-amber-700" />
+                                    </button>
+                                    <div className={`guide-content ${isGuideOpen ? 'open' : ''}`}>
+                                        <div className="px-4 pb-6 pt-2 border-t border-stone-800 space-y-4">
+                                            <div className="space-y-2">
+                                                <h4 className="text-[10px] font-bold text-amber-500 uppercase">1. 廢料回收者 (寵物)</h4>
+                                                <p className="text-[9px] text-stone-500 leading-relaxed">您的生存夥伴。需隨時監控「能量」與「水分」。能量不足時，請至黑市購買罐頭或零食進行餵食。</p>
+                                            </div>
+                                            <div className="space-y-2">
+                                                <h4 className="text-[10px] font-bold text-amber-500 uppercase">2. 冥想中心任務</h4>
+                                                <p className="text-[9px] text-stone-500 leading-relaxed">前往「冥想中心」分頁，選擇環境音軌啟動深度同步。完成 5 分鐘同步可獲 200 金幣。</p>
+                                            </div>
+                                            <div className="space-y-2">
+                                                <h4 className="text-[10px] font-bold text-amber-500 uppercase">3. 儲水槽補水任務</h4>
+                                                <p className="text-[9px] text-stone-500 leading-relaxed">點擊儲水槽下方的補水按鈕。維持水量可確保系統運作效率。</p>
+                                            </div>
+                                            <div className="space-y-2">
+                                                <h4 className="text-[10px] font-bold text-amber-500 uppercase">4. 代辦事項任務</h4>
+                                                <p className="text-[9px] text-stone-500 leading-relaxed">登錄每日目標，完成任務可獲 500 金幣重賞。</p>
+                                            </div>
+                                            <div className="space-y-2">
+                                                <h4 className="text-[10px] font-bold text-amber-500 uppercase">5. 廢土紀錄任務</h4>
+                                                <p className="text-[9px] text-stone-500 leading-relaxed">提交生存感言，每次領取 100 金幣紀錄津貼。</p>
+                                            </div>
+                                            <div className="space-y-2">
+                                                <h4 className="text-[10px] font-bold text-amber-500 uppercase">6. 生存記帳任務</h4>
+                                                <p className="text-[9px] text-stone-500 leading-relaxed">詳實紀錄物資流向，掌握生存淨值。</p>
+                                            </div>
+                                            <div className="space-y-2">
+                                                <h4 className="text-[10px] font-bold text-amber-500 uppercase">7. 非必要消費冷靜期</h4>
+                                                <p className="text-[9px] text-stone-500 leading-relaxed">輸入想買的非必要商品。必須通過 24 小時冷靜期且未購買，方可按下「成功省錢」領取獎勵。</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="wasteland-panel p-6 border-l-2 border-l-blue-900">
+                                    <h3 className="text-[10px] font-black text-blue-400 mb-4 uppercase flex justify-between items-center">
+                                        <span className="flex items-center gap-2"><Icon name="Droplets" size={14} /> 復古蒸汽儲水槽</span>
+                                        <span className="font-mono">{cat.hydration.toFixed(0)}%</span>
+                                    </h3>
+                                    <div className="steam-tank-container mb-4">
+                                        <div className="gauge-circle"><div className="gauge-needle" style={{ transform: `rotate(${(cat.hydration * 1.8) - 90}deg)` }}></div></div>
+                                        <div className="water-tube"><div className="water-inner" style={{ height: `${cat.hydration}%` }}></div></div>
+                                    </div>
+                                    <div className="grid grid-cols-2 gap-2">
+                                        {[500, 1000].map(cc => (
+                                            <button key={cc} onClick={() => setCat(c => ({...c, hydration: Math.min(100, c.hydration + (cc/20))}))} className="bg-stone-900 border border-stone-800 py-2 text-[9px] text-stone-400 hover:bg-blue-900/20 hover:border-blue-700 transition-all font-mono">+{cc}CC</button>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                <div className="wasteland-panel p-6 border-l-2 border-l-purple-900">
+                                    <h3 className="text-[10px] font-black text-purple-400 mb-4 uppercase flex justify-between items-center">
+                                        <span className="flex items-center gap-2"><Icon name="Timer" size={14} /> 非必要消費冷靜期</span>
+                                    </h3>
+                                    <div className="space-y-3">
+                                        <div className="flex gap-1">
+                                            <input value={nonEssentialInput} onChange={e => setNonEssentialInput(e.target.value)} onKeyDown={e => e.key === 'Enter' && addNonEssentialTask()} placeholder="輸入想買的商品..." className="flex-1 bg-stone-950 border border-stone-800 px-3 py-2 text-[10px] text-stone-400 focus:outline-none" />
+                                            <button onClick={addNonEssentialTask} className="bg-purple-900 px-3 text-purple-100 border border-purple-700 text-[10px] font-black whitespace-nowrap">新增</button>
+                                        </div>
+                                        
+                                        <div className="space-y-2 max-h-48 overflow-y-auto custom-scrollbar">
+                                            {nonEssentialTasks.map(task => (
+                                                <div key={task.id} className={`p-2 border flex flex-col gap-2 ${task.completed ? 'bg-purple-900/10 border-purple-900/20 opacity-50' : 'bg-stone-900 border-stone-800'}`}>
+                                                    <div className="flex justify-between items-start gap-2">
+                                                        <div className="flex flex-col min-w-0">
+                                                            <span className={`text-[9px] text-stone-300 font-bold truncate ${task.completed ? 'line-through' : ''}`}>
+                                                                商品: {task.text}
+                                                            </span>
+                                                            <span className="text-[8px] font-mono text-stone-600">冷靜剩餘: {task.completed ? "已結案" : formatTime(task.timeLeft)}</span>
+                                                        </div>
+                                                        <button onClick={() => setNonEssentialTasks(nonEssentialTasks.filter(t=>t.id!==task.id))} className="text-stone-700 hover:text-red-900 shrink-0"><Icon name="X" size={10} /></button>
+                                                    </div>
+                                                    
+                                                    {!task.completed && (
+                                                        <button 
+                                                            disabled={task.timeLeft > 0}
+                                                            onClick={() => completeSaving(task.id)}
+                                                            className={`w-full py-1.5 text-[9px] font-black uppercase transition-all border ${task.timeLeft > 0 ? 'bg-stone-950 text-stone-700 border-stone-900 cursor-not-allowed' : 'bg-emerald-900/20 text-emerald-500 border-emerald-900 hover:bg-emerald-900/40'}`}
+                                                        >
+                                                            {task.timeLeft > 0 ? '冷靜觀察中...' : '成功省錢 (領取獎勵)'}
+                                                        </button>
+                                                    )}
+                                                </div>
+                                            ))}
+                                            {nonEssentialTasks.length === 0 && <div className="text-[8px] text-stone-700 italic text-center py-4">無監控中的消費行為</div>}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="lg:col-span-6 space-y-6">
+                                <div className="wasteland-panel p-8 text-center">
+                                    <div className="mb-4"><input value={petName} onChange={e => setPetName(e.target.value)} className="bg-transparent border-b border-stone-800 text-center text-stone-300 font-black text-sm uppercase focus:outline-none w-full" /></div>
+                                    <div className="relative w-40 h-40 mx-auto mb-2 cursor-pointer" onClick={() => petInputRef.current.click()}>
+                                        <div className="w-full h-full rounded-full overflow-hidden border-2 border-stone-800 relative bg-stone-900 flex items-center justify-center">
+                                            {petImg ? <img src={petImg} className="w-full h-full object-cover grayscale" /> : <Icon name="Cat" size={48} className="text-stone-700" />}
+                                        </div>
+                                        <input type="file" ref={petInputRef} className="hidden" accept="image/*" onChange={(e) => {
+                                            const file = e.target.files[0]; if (file) { const reader = new FileReader(); reader.onloadend = () => setPetImg(reader.result); reader.readAsDataURL(file); }
+                                        }} />
+                                    </div>
+                                    <div className="text-[10px] text-stone-600 mb-6 font-bold tracking-widest">點擊上傳感測影像</div>
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <div className="bg-stone-950 p-2 border border-stone-900"><div className="flex justify-between text-[8px] text-stone-600 mb-1"><span>能量</span><span>{cat.hunger}%</span></div><div className="h-1 bg-stone-900"><div className="h-full bg-amber-900" style={{width: `${cat.hunger}%`}}></div></div></div>
+                                        <div className="bg-stone-950 p-2 border border-stone-900"><div className="flex justify-between text-[8px] text-stone-600 mb-1"><span>水分</span><span>{cat.hydration}%</span></div><div className="h-1 bg-stone-900"><div className="h-full bg-blue-900" style={{width: `${cat.hydration}%`}}></div></div></div>
+                                    </div>
+                                </div>
+
+                                <div className="wasteland-panel p-6 border-t-2 border-t-emerald-900">
+                                    <div className="flex justify-between items-center mb-6">
+                                        <h3 className="text-[10px] font-black text-emerald-500 uppercase flex items-center gap-2"><Icon name="Wallet" size={14} /> 廢土生存記帳 (橫式)</h3>
+                                        <div className="flex items-center gap-4">
+                                            <span className="text-[10px] text-stone-500 font-mono uppercase tracking-widest">淨值:</span>
+                                            <span className="font-mono text-emerald-400 font-bold">{calculateBalance().toLocaleString()}</span>
+                                        </div>
+                                    </div>
+                                    <div className="flex flex-col md:flex-row gap-6">
+                                        <div className="md:w-1/3 space-y-3">
+                                            <div className="flex flex-col gap-2">
+                                                <select value={ledgerType} onChange={e => setLedgerType(e.target.value)} className="bg-stone-950 border border-stone-800 text-[10px] text-stone-400 px-2 py-2 focus:outline-none"><option value="expense">支出</option><option value="income">收入</option></select>
+                                                <input value={ledgerAmount} onChange={e => setLedgerAmount(e.target.value)} placeholder="金額" type="number" className="bg-stone-950 border border-stone-800 px-3 py-2 text-[10px] text-stone-400 focus:outline-none" />
+                                                <input value={ledgerTitle} onChange={e => setLedgerTitle(e.target.value)} placeholder="項目..." className="bg-stone-950 border border-stone-800 px-3 py-2 text-[10px] text-stone-400 focus:outline-none" />
+                                                <button onClick={addLedgerEntry} className="py-2 bg-emerald-900 text-emerald-100 text-[10px] font-black uppercase flex items-center justify-center gap-2"><Icon name="Plus" size={12} /> 提交帳項</button>
+                                            </div>
+                                        </div>
+                                        <div className="md:w-2/3">
+                                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-48 overflow-y-auto custom-scrollbar pr-2">
+                                                {ledger.length === 0 ? <div className="col-span-2 text-center py-10 border border-dashed border-stone-800 text-[9px] text-stone-700 italic">無收支紀錄</div> : ledger.map(item => (
+                                                    <div key={item.id} className="bg-stone-950/40 border border-stone-900 p-2 flex justify-between items-center h-12">
+                                                        <div className="flex flex-col min-w-0"><span className="text-[9px] text-stone-300 font-bold truncate">{item.title}</span><span className="text-[7px] text-stone-600 font-mono">{item.time}</span></div>
+                                                        <span className={`text-[10px] font-mono font-bold shrink-0 ${item.type === 'income' ? 'text-emerald-500' : 'text-red-500'}`}>{item.type === 'income' ? '+' : '-'}{item.amount}</span>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="lg:col-span-3 space-y-6">
+                                <div className="wasteland-panel p-6 border-l-2 border-l-stone-600">
+                                    <h3 className="text-[10px] font-black text-stone-400 mb-4 uppercase flex items-center gap-2"><Icon name="ListTodo" size={14} /> 任務清單</h3>
+                                    <input value={todoInput} onChange={e => setTodoInput(e.target.value)} onKeyDown={e => e.key === 'Enter' && (setTodos([...todos, { id: Date.now(), text: todoInput, completed: false }]), setTodoInput(""))} placeholder="新增代辦..." className="w-full bg-stone-950 border border-stone-800 px-3 py-2 text-[10px] text-stone-400 focus:outline-none mb-4" />
+                                    <div className="space-y-2 max-h-40 overflow-y-auto custom-scrollbar">
+                                        {todos.map(todo => (
+                                            <div key={todo.id} onClick={() => toggleTodo(todo.id)} className={`p-3 border flex items-center justify-between gap-3 cursor-pointer ${todo.completed ? 'opacity-30 border-stone-900' : 'bg-stone-900/50 border-stone-800'}`}>
+                                                <span className="text-[10px] truncate">{todo.text}</span>
+                                                <button onClick={(e) => {e.stopPropagation(); setTodos(t=>t.filter(i=>i.id!==todo.id));}} className="text-stone-700 hover:text-red-900"><Icon name="X" size={12} /></button>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                <div className="wasteland-panel p-6 border-l-2 border-l-amber-600">
+                                    <h3 className="text-[10px] font-black text-amber-500 mb-4 uppercase flex items-center gap-2"><Icon name="Cpu" size={14} /> 廢土紀錄輸入</h3>
+                                    <div className="space-y-3">
+                                        <textarea value={input} onChange={e => setInput(e.target.value)} placeholder="今日的心情紀錄..." className="w-full h-24 bg-stone-950 border border-stone-900 px-3 py-2 text-xs text-stone-400 focus:outline-none resize-none" />
+                                        <button onClick={() => { if(!input) return; const mood = input.length > 10 ? input.substring(0, 10) + "..." : input; setCurrentMood(mood); setDiaries(d => [{id: Date.now(), text: input, time: new Date().toLocaleTimeString()}, ...d]); setWealth(w => w + 100); setInput(""); }} className="w-full py-3 bg-amber-900 text-amber-100 font-black text-[10px] uppercase">提交紀錄</button>
+                                        <div className="p-3 bg-stone-950 border border-stone-900 text-center"><div className="text-[8px] text-amber-700 uppercase font-mono mb-1 tracking-widest">當下感測心情</div><div className="text-[11px] text-stone-300 font-bold italic truncate">「 {currentMood} 」</div></div>
+                                    </div>
+                                </div>
+
+                                <div className="wasteland-panel p-6 border-l-2 border-l-stone-400">
+                                    <h3 className="text-[10px] font-black text-stone-400 mb-4 uppercase flex items-center gap-2"><Icon name="History" size={14} /> 歷史紀錄存檔</h3>
+                                    <div className="space-y-3 max-h-[300px] overflow-y-auto custom-scrollbar">
+                                        {diaries.length === 0 ? <div className="text-[9px] text-stone-700 italic text-center py-10 border border-dashed border-stone-800">無存檔紀錄...</div> : diaries.map(diary => (
+                                            <div key={diary.id} className="p-3 border border-stone-900 bg-stone-950/50">
+                                                <div className="flex justify-between items-center mb-1"><div className="text-[7px] text-amber-900 font-mono uppercase">{diary.time}</div><button onClick={() => setDiaries(diaries.filter(d => d.id !== diary.id))} className="text-stone-800 hover:text-red-900"><Icon name="Trash2" size={8} /></button></div>
+                                                <div className="text-[10px] text-stone-500 leading-relaxed truncate">{diary.text}</div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        </main>
+                    )}
+
+                    {activeTab === 'meditation' && (
+                        <main className="w-full max-w-5xl p-6 flex flex-col items-center">
+                            <div className="wasteland-panel p-10 w-full flex flex-col items-center">
+                                <h2 className="text-4xl font-mono text-stone-200 mb-10">{Math.floor(meditationTime / 60).toString().padStart(2, '0')}:{(meditationTime % 60).toString().padStart(2, '0')}</h2>
+                                <button onClick={() => toggleTrack(musicTracks[0])} className="px-10 py-4 bg-amber-900 text-amber-100 text-[10px] font-black uppercase tracking-widest">{isMeditating ? '停止同步' : '開始冥想獲取金幣'}</button>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-10 w-full">
+                                    {musicTracks.map(track => (
+                                        <button key={track.id} onClick={() => toggleTrack(track)} className={`p-4 border text-left ${activeTrackId === track.id ? 'border-amber-600 bg-amber-900/20' : 'border-stone-900 bg-stone-950'}`}>
+                                            <div className="text-[11px] font-black text-stone-300">{track.name}</div>
+                                            <div className="text-[8px] text-stone-600 uppercase">{track.subtitle}</div>
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+                        </main>
+                    )}
+
+                    {activeTab === 'shop' && (
+                        <main className="w-full max-w-6xl p-6 space-y-10">
+                            <div className="wasteland-panel p-6">
+                                <h2 className="text-[10px] font-black mb-6 text-emerald-600 uppercase flex items-center gap-2"><Icon name="Beef" size={14} /> 黑市寵物補給站</h2>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    {supplyList.map(supply => (
+                                        <div key={supply.id} className="p-6 flex items-center justify-between gap-6 bg-[#1c1917] border border-stone-800">
+                                            <div className="flex-1"><div className="text-xs font-black text-stone-200 mb-1">{supply.name}</div><div className="text-[10px] text-stone-500 mb-2">{supply.desc}</div><div className="flex gap-2"><span className="text-[9px] px-2 py-0.5 bg-emerald-900/20 text-emerald-500 border border-emerald-900">能量 +{supply.hunger}</span></div></div>
+                                            <button onClick={() => handleBuySupply(supply)} disabled={wealth < supply.cost} className="px-6 py-3 text-[10px] font-black uppercase tracking-widest bg-emerald-900 text-emerald-100 disabled:opacity-30">{supply.cost} 金幣</button>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                            <div className="wasteland-panel p-6">
+                                <h2 className="text-[10px] font-black mb-6 text-amber-600 uppercase flex items-center gap-2"><Icon name="CreditCard" size={14} /> 黑市權限訂閱</h2>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    {subscriptionList.map(sub => (
+                                        <div key={sub.id} className="p-6 flex items-center justify-between gap-6 relative overflow-hidden bg-[#1c1917] border border-stone-800">
+                                            {sub.isLocked && <div className="locked-overlay"><Icon name="Lock" size={24} className="text-amber-600 mb-2" /><span className="text-[11px] font-black text-stone-300 uppercase">暫不開放</span></div>}
+                                            <div className="flex-1"><div className="text-xs font-black text-stone-200 mb-1">{sub.name}</div><div className="text-[10px] text-stone-500 mb-3">{sub.desc}</div></div>
+                                            <button onClick={() => handleSubscribe(sub.id, sub.cost)} className="px-6 py-3 text-[10px] font-black uppercase tracking-widest bg-amber-900 text-amber-100 disabled:opacity-30">{subscriptions.includes(sub.id) ? '已擁有' : `${sub.cost} ${sub.isCash ? '$' : '金幣'}`}</button>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </main>
+                    )}
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
+        // ---------------------------
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        try {
+            if (typeof GameDashboard !== 'undefined') root.render(<GameDashboard />);
+            else if (typeof App !== 'undefined') root.render(<App />);
+            else root.render(<div className="p-10 text-red-500 font-bold">Error: Main component (GameDashboard or App) not found.</div>);
+        } catch (e) {
+            root.render(<div className="p-10 text-red-500">Render Error: {e.message}</div>);
+        }
+    </script>
+</body>
+</html>
